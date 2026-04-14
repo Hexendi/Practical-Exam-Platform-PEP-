@@ -1,4 +1,5 @@
 import Footer from '../components/footer';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import '../App.css';
 import { TbAccessPoint } from 'react-icons/tb';
@@ -26,7 +27,9 @@ function Home() {
 Stay calm, trust your preparation, and give your best.
 Exams are not the end of the journey, but a step toward success.</p>
         <div className="hero-btns">
-          <button className="btn-primary">login now</button>
+          <Link to="/login">
+	  <button className="btn-primary">login now</button>
+	  </Link>
           <button className="btn-ghost">learn more</button>
         </div>
       </div>

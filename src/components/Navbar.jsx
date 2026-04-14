@@ -1,4 +1,5 @@
 import logo from '../assets/logo.png'; 
+import { Link } from 'react-router-dom'; 
 import { FaRegNoteSticky } from "react-icons/fa6";
 import { BiHomeAlt } from "react-icons/bi";
 import { IoMdLogIn } from "react-icons/io";
@@ -15,7 +16,9 @@ function Navbar() {
         <a href="/" className="nav-link"><BiHomeAlt id="icons" />home</a>
         <a href="/exam" className="nav-link"><FaRegNoteSticky id="icons" />exam</a>
         <a href="/notification" className="nav-link"><MdOutlineNotificationsActive id="icons" />notification</a>
+      <Link to="/login">
       <button className="nav-btn"><IoMdLogIn />login</button>
+      </Link>
 	</div>
     </nav>
   );
