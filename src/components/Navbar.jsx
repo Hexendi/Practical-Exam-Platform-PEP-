@@ -13,9 +13,9 @@ function Navbar() {
         </div>
       </div>
 	<div className="nav-links">
-        <a href="/" className="nav-link"><BiHomeAlt id="icons" />home</a>
-        <a href="/exam" className="nav-link"><FaRegNoteSticky id="icons" />exam</a>
-        <a href="/notification" className="nav-link"><MdOutlineNotificationsActive id="icons" />notification</a>
+        <Link to="/" className="nav-link"><BiHomeAlt id="icons" />home</Link>
+        <Link to="/exam" className="nav-link"><FaRegNoteSticky id="icons" />exam</Link>
+        <Link to="/notification" className="nav-link"><MdOutlineNotificationsActive id="icons" />notification</Link>
       <Link to="/login">
       <button className="nav-btn"><IoMdLogIn />login</button>
       </Link>

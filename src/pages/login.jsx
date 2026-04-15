@@ -1,5 +1,6 @@
 import '../App.css';
 import Navbar from '../components/Navbar.jsx';
+import { Link } from 'react-router-dom';
 
 function Login() {
   return (
@@ -34,7 +35,7 @@ function Login() {
           </div>
 
           <div className="forgot">
-            <a href="/forgot">forgot password?</a>
+            <Link to="/forgot">forgot password?</Link>
           </div>
 
           <button className="btn-login">login now</button>
@@ -45,9 +46,11 @@ function Login() {
             <div className="divider-line"></div>
           </div>
 
-          <button className="btn-signup" onClick={() => window.location.href = '/signup'}>
-            create an account
-          </button>
+          <Link to="/signup">
+            <button className="btn-signup">
+              create an account
+            </button>
+          </Link>
 
           <div className="card-bottom">
             <p>© 2026 PEP platform — all rights reserved</p>
