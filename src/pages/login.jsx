@@ -1,8 +1,53 @@
+import { useState } from 'react';
 import '../App.css';
 import Navbar from '../components/Navbar.jsx';
 import { Link } from 'react-router-dom';
 
+
+//
+const users = [
+  {
+    email: "admin@test.com",
+    password: "1234",
+    role: "admin"
+  },
+  {
+    email: "user@test.com",
+    password: "0000",
+    role: "user"
+  }
+];
+
+
+
+
+
+
 function Login() {
+  const [formData,setFormData] = useState({
+    email:"",
+    password:""
+  });
+  const handleChange =  (e) => {
+    const {name,value} = e.target;
+    setFormData(prev =>({
+      ...prev , 
+      [name]:value
+    }))};
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      const res = await fetch("http://localhost:5000/login" , {
+      method : "POST",
+      headers : {
+        "content-type" : "application/json"
+      },
+      body: JSON.stringify(formData)
+    });
+    const data = await res.json();
+    localStorage.setItem("token", data.token);
+  }
   return (
     <>
       <Navbar />
@@ -20,6 +65,7 @@ function Login() {
               type="text"
               id="email"
               name="email"
+              onChange={handleChange}
               placeholder="ex: 25002@supnum.mr"
             />
           </div>
@@ -30,6 +76,7 @@ function Login() {
               type="password"
               id="password"
               name="pass"
+              onChange={handleChange}
               placeholder="enter your password"
             />
           </div>
@@ -37,8 +84,9 @@ function Login() {
           <div className="forgot">
             <Link to="/forgot">forgot password?</Link>
           </div>
-
-          <button className="btn-login">login now</button>
+          <form onSubmit={handleSubmit}>
+          <button className="btn-login" type="submit">login now</button>
+          </form>
 
           <div className="divider">
             <div className="divider-line"></div>
