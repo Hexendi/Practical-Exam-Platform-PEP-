@@ -1,4 +1,6 @@
+
 import express from 'express';
+import adminRoutes from "./routes/adminRoutes.js";
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import verifyToken from './middleware/middleware.js';
@@ -27,13 +29,12 @@ app.get('/', (req, res) => {
   res.send('the home page');
 });
 
-app.post('/login', (req, res) => {
+app.post("/login", (req, res) => {
 
   const { email, password } = req.body;
-
-  
   const user = users.find(
-    u => u.email === email && u.password === password
+    u => u.email === email &&
+         u.password === password
   );
 
   if (!user) {
@@ -41,35 +42,24 @@ app.post('/login', (req, res) => {
       message: "wrong email or password"
     });
   }
-
   const token = jwt.sign(
     {
       email: user.email,
       role: user.role
     },
-    "h3saidtoh3_chkizmiz", 
+    "h3saidtoh3_chkizmiz",
     { expiresIn: "1h" }
   );
 
-  res.json({
+   res.json({
     token,
     role: user.role
   });
+
 });
 
 // Protected route
-app.get(
-  '/dashboard',
-  verifyToken,
-  (req, res) => {
-
-    res.json({
-      message: "Welcome to dashboard",
-      user: req.user
-    });
-
-  }
-);
+app.use("/admin", adminRoutes);
 
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);

@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import '../App.css';
 import Navbar from '../components/Navbar.jsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
+
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -11,39 +15,63 @@ function Login() {
   });
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
 
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
+    setLoading(true);
+
     try {
-      const res = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
+
+      const res = await fetch(
+        "http://localhost:5000/login",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json"
+          },
+          body: JSON.stringify(formData)
+        }
+      );
 
       const data = await res.json();
 
       if (res.ok) {
+
         localStorage.setItem("token", data.token);
-        alert("Login successful");
+        localStorage.setItem("role", data.role);
+
+	if( data.role == "admin"){
+      	  navigate("/dashboard");
+	}else{
+	 navigate("/exam");
+	}
+
       } else {
+
         alert(data.message || "Login failed");
+
       }
 
     } catch (error) {
+
       console.error(error);
       alert("Server error");
+
     }
+
+    setLoading(false);
+
   };
 
   return (
@@ -58,10 +86,11 @@ function Login() {
             <p className="card-sub">sign in to your PEP account</p>
           </div>
 
-           <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
 
             <div className="field">
               <label htmlFor="email">email</label>
+
               <input
                 type="text"
                 id="email"
@@ -74,6 +103,7 @@ function Login() {
 
             <div className="field">
               <label htmlFor="password">password</label>
+
               <input
                 type="password"
                 id="password"
@@ -85,18 +115,25 @@ function Login() {
             </div>
 
             <div className="forgot">
-              <Link to="/forgot">forgot password?</Link>
+              <Link to="/forgot">
+                forgot password?
+              </Link>
             </div>
 
             <button
               className="btn-login"
               type="submit"
+              disabled={loading}
             >
-              login now
+
+              {loading
+                ? "Logging in..."
+                : "login now"}
+
             </button>
 
           </form>
-      
+
           <div className="divider">
             <div className="divider-line"></div>
             <span>or</span>
@@ -110,12 +147,13 @@ function Login() {
           </Link>
 
           <div className="card-bottom">
-            <p>© 2026 PEP platform — all rights reserved</p>
+            <p>
+              © 2026 PEP platform — all rights reserved
+            </p>
           </div>
 
         </div>
       </div>
-
     </>
   );
 }
