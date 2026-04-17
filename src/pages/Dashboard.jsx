@@ -1,5 +1,7 @@
 import '../App.css';
-import logo from '../assets/logo.png';
+import logoDark from "../assets/logo.png";
+import logoLight from "../assets/logo0.png";
+import { useTheme } from "../context/ThemeContext";
 import {
   TbLayoutDashboard,
   TbUsers,
@@ -19,7 +21,7 @@ function Dashboard() {
     { val: '2', label: 'uploads today', color: 'purple' },
     { val: '98%', label: 'system uptime', color: 'green' },
   ];
-
+  const { isLight } = useTheme();
   return (
     <div className="container">
 
@@ -28,7 +30,10 @@ function Dashboard() {
 
         <div className="sidebar-logo">
           <div className="logo-img">
-            <img src={logo} alt="logo" />
+               <img
+   		   src={isLight ? logoLight : logoDark}
+     		   alt="logo"
+    		/>
           </div>
 
           <span className="logo-name">
